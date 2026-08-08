@@ -25,7 +25,30 @@ function toThreatLevel(severity: string | undefined): GeopoliticalEvent['severit
   return 'LOW';
 }
 
-/** Select the highest-severity, most recent geopolitical event from the signal stream. */
+/** Convert a raw signal into the canonical GeopoliticalEvent shape. */
+function signalToEvent(signal: Signal): GeopoliticalEvent {
+  return {
+    id: signal.id,
+    title: signal.title,
+    severity: toThreatLevel(signal.severity),
+    category: signal.category ?? 'general',
+    region: signal.region ?? 'global',
+    timestamp: typeof signal.timestamp === 'string' ? signal.timestamp : signal.timestamp.toISOString(),
+    summary: signal.summary,
+    lat: signal.lat,
+    lon: signal.lon,
+  };
+}
+
+/**
+ * Select the highest-severity, most recent geopolitical event from the signal stream.
+ *
+ * If the top-severity event does not map to any market rule, fall back to the most
+ * recent event at the same severity level that does. This keeps the market impact
+ * treemap and affected-market lists populated when the latest signal is a non-market
+ * event (e.g. a bond-market procedural story) while higher-severity geopolitical events
+ * are already in the feed.
+ */
 export function selectPrimaryEvent(signals: Signal[]): GeopoliticalEvent | null {
   if (!signals || signals.length === 0) return null;
 
@@ -38,20 +61,14 @@ export function selectPrimaryEvent(signals: Signal[]): GeopoliticalEvent | null 
     return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
   });
 
-  const top = sorted[0];
-  if (!top) return null;
+  const topRank = severityRank[toThreatLevel(sorted[0].severity)] ?? 0;
+  const sameRank = sorted.filter((s) => (severityRank[toThreatLevel(s.severity)] ?? 0) === topRank);
 
-  return {
-    id: top.id,
-    title: top.title,
-    severity: toThreatLevel(top.severity),
-    category: top.category ?? 'general',
-    region: top.region ?? 'global',
-    timestamp: typeof top.timestamp === 'string' ? top.timestamp : top.timestamp.toISOString(),
-    summary: top.summary,
-    lat: top.lat,
-    lon: top.lon,
-  };
+  // Prefer the most recent signal at the highest severity that actually maps to markets.
+  const matched = sameRank.find((s) => findMatchingRules(signalToEvent(s)).length > 0) ?? sorted[0];
+  if (!matched) return null;
+
+  return signalToEvent(matched);
 }
 
 
