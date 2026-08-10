@@ -49,11 +49,16 @@ export function marketImpactItemsFromScores(scoredMarkets: ScoredMarket<unknown>
         ? (m.data as { display: string }).display
         : m.symbol;
 
-      const secondary = m.data && typeof m.data === 'object' && 'change' in m.data
-        ? `${(m.data as { change: number | null }).change ?? 0 > 0 ? '+' : ''}${((m.data as { change: number | null }).change ?? 0).toFixed(2)}%`
-        : m.data && typeof m.data === 'object' && 'change24h' in m.data
-          ? `${(m.data as { change24h: number | null }).change24h ?? 0 > 0 ? '+' : ''}${((m.data as { change24h: number | null }).change24h ?? 0).toFixed(2)}%`
-          : undefined;
+      const rawChange = m.data && typeof m.data === 'object'
+        ? 'change' in m.data
+          ? (m.data as { change: number | null }).change
+          : 'change24h' in m.data
+            ? (m.data as { change24h: number | null }).change24h
+            : null
+        : null;
+      const secondary = rawChange !== null && rawChange !== undefined && Number.isFinite(rawChange)
+        ? `${rawChange > 0 ? '+' : ''}${rawChange.toFixed(2)}%`
+        : undefined;
 
       return {
         id: `${m.type}:${m.symbol}`,
