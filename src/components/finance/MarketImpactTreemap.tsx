@@ -12,9 +12,9 @@ interface MarketImpactTreemapProps {
 }
 
 function colorClassFromValue(value: number | null | undefined): string {
-  if (value === 1) return 'text-accent-green';
-  if (value === -1) return 'text-accent-red';
-  return 'text-accent-gold';
+  if (value == null || value === 0) return 'text-accent-gold';
+  if (value > 0) return 'text-accent-green';
+  return 'text-accent-red';
 }
 
 function toTreemapItem(item: MarketImpactItem, index: number): MetricTreemapItem {
@@ -54,7 +54,13 @@ function renderTile(tile: FloatMetricTreemapTile<MarketImpactItem>) {
   const showValue = minDim >= 36;
   const colorClass = colorClassFromValue(tile.item.colorValue);
 
-  const titleText = `${tile.item.primaryText ?? tile.item.label}${tile.item.secondaryText ? ` — ${tile.item.secondaryText}` : ''}`;
+  const marketData = tile.item.data?.data as any;
+  let priceStr = '';
+  if (marketData && marketData.price != null) {
+    priceStr = ` (${marketData.price}${marketData.currency ? ` ${marketData.currency}` : ''})`;
+  }
+
+  const titleText = `${tile.item.primaryText ?? tile.item.label}${tile.item.secondaryText ? ` — ${tile.item.secondaryText}` : ''}${priceStr}`;
 
   return (
     <g key={tile.item.id} transform={`translate(${tile.x.toFixed(2)}, ${tile.y.toFixed(2)})`}>
