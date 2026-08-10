@@ -18,6 +18,7 @@ import FinanceLiveNews from './FinanceLiveNews';
 import CyberThreatPanel from './CyberThreatPanel';
 import WorldClockPanel from '@/components/WorldClockPanel';
 import EconomicPanel from '@/components/EconomicPanel';
+import EventMarketIntelligencePanel from './EventMarketIntelligencePanel';
 
 const WorldMap = dynamic(() => import('@/components/WorldMap'), {
   ssr: false,
@@ -82,6 +83,11 @@ export default function FinanceDashboardFull() {
 
         {/* RIGHT COLUMN — worldmonitor style panels */}
         <div className="hidden lg:flex flex-col gap-0 overflow-y-auto h-full border-l border-white/5 scrollbar-thin">
+          {/* Event Market Intelligence */}
+          <div className="shrink-0">
+            <EventMarketIntelligencePanel />
+          </div>
+
           {/* World Clock — strategic timezones */}
           <div className="shrink-0 h-[200px] overflow-hidden">
             <WorldClockPanel />
