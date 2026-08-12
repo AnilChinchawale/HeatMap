@@ -82,7 +82,7 @@ export default function ComparativePanel({ baseCode }: ComparativePanelProps) {
                   </div>
                   {/* Compare country */}
                   <div className="flex items-center gap-2">
-                    <span className="text-sm">{COUNTRIES[compareCode].flag}</span>
+                    <span className="text-sm">{compareCode && COUNTRIES[compareCode]?.flag}</span>
                     <div className="flex-1 h-3 bg-white/5 rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full bg-emerald-500/50 transition-all"

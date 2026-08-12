@@ -57,9 +57,10 @@ export async function GET() {
         'X-Frame-Options': 'SAMEORIGIN',
       },
     });
-  } catch (err: any) {
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Proxy failed';
     return NextResponse.json(
-      { error: err.message || 'Proxy failed' },
+      { error: message },
       { status: 502 }
     );
   }

@@ -1256,7 +1256,7 @@ export default function WorldMap({
 
       if (financeLayers.includes("resilience")) {
         RESILIENCE_INDEX.forEach((ri) => {
-          const color = ri.description.includes("HIGH") ? "#00ff88" : ri.description.includes("MEDIUM") ? "#ffaa00" : "#ff2244";
+          const color = ri.description?.includes("HIGH") ? "#00ff88" : ri.description?.includes("MEDIUM") ? "#ffaa00" : "#ff2244";
           const el = createMarkerElement("🛡️", color, ri.name, 0.8);
           const marker = new maplibregl.Marker({ element: el })
             .setLngLat([ri.lon, ri.lat])

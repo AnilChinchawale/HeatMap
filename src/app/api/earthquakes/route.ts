@@ -32,8 +32,20 @@ export async function GET() {
     }
 
     const data = await res.json();
-    
-    const earthquakes: Earthquake[] = (data.features || []).map((f: any) => ({
+    interface USGSFeature {
+      id: string;
+      properties: {
+        mag: number;
+        place: string;
+        time: number;
+        url: string;
+      };
+      geometry: {
+        coordinates: [number, number, number];
+      };
+    }
+
+    const earthquakes: Earthquake[] = ((data.features || []) as USGSFeature[]).map((f) => ({
       id: f.id,
       magnitude: f.properties.mag,
       place: f.properties.place,

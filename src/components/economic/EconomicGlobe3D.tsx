@@ -74,7 +74,6 @@ export default function EconomicGlobe3D({ countries, selectedCode, onCountryClic
   const markers = Object.entries(countries)
     .filter(([code]) => COUNTRY_COORDS[code])
     .map(([code, data]) => ({
-      code,
       ...data,
       ...COUNTRY_COORDS[code],
       color: riskColor(data.risk),

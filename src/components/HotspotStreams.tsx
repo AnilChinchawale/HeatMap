@@ -75,7 +75,7 @@ function StreamPlayer({ hotspot, channelIndex, isMuted, isExpanded, onExpand }: 
 
   const hlsUrl = HLS_STREAMS[channel.embedId];
   const embedUrl = hlsUrl
-    ? null
+    ? undefined
     : `https://www.youtube.com/embed/${channel.embedId}?autoplay=1&mute=${isMuted ? 1 : 0}&rel=0&modestbranding=1&playsinline=1&controls=0&enablejsapi=1`;
 
   return (

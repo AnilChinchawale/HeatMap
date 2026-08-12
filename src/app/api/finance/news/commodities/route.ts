@@ -45,8 +45,16 @@ async function parseRSS(url: string): Promise<RssFeed> {
   return { items };
 }
 
+interface FinanceNewsArticle {
+  title: string;
+  summary: string;
+  source: string;
+  url: string;
+  publishedAt: string;
+}
+
 export async function GET() {
-  const articles: any[] = [];
+  const articles: FinanceNewsArticle[] = [];
 
   const results = await Promise.allSettled(
     FEEDS.map(async (feed) => {
