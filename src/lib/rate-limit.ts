@@ -26,6 +26,7 @@ const ENDPOINT_CONFIGS: Record<string, RateLimitConfig> = {
   '/api/push/unsubscribe': { windowMs: 60 * 1000, maxRequests: 10 },
   '/api/markets': { windowMs: 60 * 1000, maxRequests: 120 },
   '/api/predictions': { windowMs: 60 * 1000, maxRequests: 60 },
+  '/api/alerts': { windowMs: 60 * 1000, maxRequests: 20 },        // 20 per minute — conservative for admin operations
 };
 
 /**
