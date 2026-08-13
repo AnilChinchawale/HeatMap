@@ -26,6 +26,7 @@ export interface Signal {
   lon?: number;
   summary?: string;
   region?: string;
+  iranRelevance?: number;
 }
 
 export interface MarketData {

@@ -31,11 +31,17 @@ async function fetchGDELTEvents(): Promise<ConflictEvent[]> {
     
     if (!res.ok) return [];
     
+    interface GDELTArticle {
+      title?: string;
+      url?: string;
+      seendate?: string;
+    }
+
     const data = await res.json();
-    const articles = data?.articles || [];
+    const articles = (data?.articles || []) as GDELTArticle[];
     
     // Extract location data from GDELT articles
-    const events: ConflictEvent[] = articles.slice(0, 20).map((a: any, i: number) => {
+    const events: ConflictEvent[] = articles.slice(0, 20).map((a, i: number) => {
       const title = a.title || '';
       const url = a.url || '';
       

@@ -63,7 +63,7 @@ const REGIONS = {
     risk: 'high',
     oilMbpd: 24,
   },
-};
+} as const;
 
 // Ship types of interest
 const SHIP_TYPES = {
@@ -105,7 +105,7 @@ function generateShipsForRegion(region: keyof typeof REGIONS, count: number): Sh
       cargo: type === 'tanker' ? 'Crude Oil' : type === 'lng' ? 'LNG' : type === 'container' ? 'Containers' : 'General',
       status: Math.random() > 0.8 ? 'anchored' : 'underway',
       lastUpdate: Date.now() - Math.floor(Math.random() * 3600000),
-      risk: REGIONS[region].risk === 'critical' ? 'high' : REGIONS[region].risk as any,
+      risk: REGIONS[region].risk === 'critical' ? 'high' : REGIONS[region].risk,
     });
   }
   

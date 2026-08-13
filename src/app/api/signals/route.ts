@@ -826,7 +826,7 @@ export async function GET(request: Request) {
     if (!refresh && cache && Date.now() - cache.timestamp < CACHE_TTL) {
       let signals = cache.signals;
       if (filter === "iran") {
-        signals = signals.filter((s: any) => s.iranRelevance > 0);
+        signals = signals.filter((s) => (s.iranRelevance ?? 0) > 0);
       }
       return NextResponse.json({
         signals,
@@ -903,9 +903,11 @@ export async function GET(request: Request) {
       LOW: 3,
       INFO: 4,
     };
-    allSignals.sort((a: any, b: any) => {
-      if (a.iranRelevance !== b.iranRelevance) {
-        return b.iranRelevance - a.iranRelevance;
+    allSignals.sort((a, b) => {
+      const aRel = a.iranRelevance ?? 0;
+      const bRel = b.iranRelevance ?? 0;
+      if (aRel !== bRel) {
+        return bRel - aRel;
       }
       const severityDiff =
         severityOrder[a.severity] - severityOrder[b.severity];
@@ -925,7 +927,7 @@ export async function GET(request: Request) {
 
     let filteredSignals = signals;
     if (filter === "iran") {
-      filteredSignals = signals.filter((s: any) => s.iranRelevance > 0);
+      filteredSignals = signals.filter((s) => (s.iranRelevance ?? 0) > 0);
     }
 
     return NextResponse.json({
@@ -936,7 +938,7 @@ export async function GET(request: Request) {
         failed: failCount,
         total: FEEDS.length,
       },
-      iranRelated: signals.filter((s: any) => s.iranRelevance > 0).length,
+      iranRelated: signals.filter((s) => (s.iranRelevance ?? 0) > 0).length,
     });
   } catch (error) {
     console.error("Signals API error:", error);

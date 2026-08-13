@@ -77,9 +77,12 @@ async function fetchWBSparkline(iso3: string, indicator: string, attempt = 1): P
     const json = await res.json();
     const arr = Array.isArray(json) ? json[1] || json[0] : null;
     if (!Array.isArray(arr)) return [];
-    const values = arr
-      .filter((item: any) => item.value !== null && item.value !== undefined)
-      .map((item: any) => typeof item.value === 'number' ? item.value : parseFloat(item.value))
+    interface WBDataPoint {
+      value: number | string | null;
+    }
+    const values = (arr as WBDataPoint[])
+      .filter((item) => item.value !== null && item.value !== undefined)
+      .map((item) => typeof item.value === 'number' ? item.value : parseFloat(item.value as string))
       .reverse(); // chronological order
     return values.slice(-12); // last 12 data points
   } catch {
@@ -120,7 +123,7 @@ async function fetchCountryData(code: string): Promise<MacroData> {
   ]);
 
   // Use fallback where live data is missing
-  const resolve = (live: number | null, fb: number | undefined) =>
+  const resolve = (live: number | null, fb: number | null | undefined) =>
     live !== null ? live : (fb !== undefined ? fb : null);
 
   const gdpG = resolve(gdpGrowth, fallback?.gdpGrowth);

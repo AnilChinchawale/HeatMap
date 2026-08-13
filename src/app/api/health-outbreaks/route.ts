@@ -367,8 +367,9 @@ export async function GET() {
         seenKeys.add(key);
         allOutbreaks.push(rec);
       }
-    } catch (err: any) {
-      errors.push(`WHO-${virus}: ${err.message || String(err)}`);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      errors.push(`WHO-${virus}: ${message}`);
     }
   }
 
@@ -411,8 +412,9 @@ export async function GET() {
             monitoring_count,
           });
         }
-      } catch (err: any) {
-        errors.push(`RSS-${virus}: ${err.message || String(err)}`);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        errors.push(`RSS-${virus}: ${message}`);
       }
     }
   }

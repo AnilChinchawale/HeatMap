@@ -34,8 +34,20 @@ const CRITICAL_KEYWORDS = [
   'assassination', 'coup', 'revolution',
 ];
 
+interface AlertSignal {
+  title: string;
+  summary?: string | null;
+  severity: string;
+  source: string;
+  category: string;
+  timeAgo: string;
+  sourceUrl?: string | null;
+  region?: string | null;
+  callsign?: string | null;
+}
+
 // Check if text matches alert criteria
-function matchesAlert(alert: AlertConfig, signal: any): boolean {
+function matchesAlert(alert: AlertConfig, signal: AlertSignal): boolean {
   const text = `${signal.title} ${signal.summary || ''}`.toLowerCase();
   
   switch (alert.type) {
@@ -47,7 +59,7 @@ function matchesAlert(alert: AlertConfig, signal: any): boolean {
       return signal.region?.toLowerCase() === alert.value.toLowerCase() ||
              text.includes(alert.value.toLowerCase());
     case 'flight':
-      return signal.callsign?.toUpperCase().startsWith(alert.value.toUpperCase());
+      return !!(signal.callsign?.toUpperCase().startsWith(alert.value.toUpperCase()));
     default:
       return false;
   }
@@ -78,8 +90,15 @@ async function sendTelegram(chatId: string, message: string): Promise<boolean> {
   }
 }
 
+interface WebhookPayload {
+  alert?: AlertConfig;
+  signal?: AlertSignal;
+  message: string;
+  test?: boolean;
+}
+
 // Send webhook
-async function sendWebhook(url: string, payload: any): Promise<boolean> {
+async function sendWebhook(url: string, payload: WebhookPayload): Promise<boolean> {
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -94,7 +113,7 @@ async function sendWebhook(url: string, payload: any): Promise<boolean> {
 }
 
 // Format alert message
-function formatAlertMessage(signal: any, alertType: string): string {
+function formatAlertMessage(signal: AlertSignal, alertType: string): string {
   const severityEmoji: Record<string, string> = {
     CRITICAL: '🔴',
     HIGH: '🟠',

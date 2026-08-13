@@ -34,16 +34,16 @@ async function fetchInternal<T>(path: string): Promise<T> {
 function buildExistingQuoteMap(financeData: FinanceData): Record<string, { price?: number; change?: number; currency?: string }> {
   const map: Record<string, { price?: number; change?: number; currency?: string }> = {};
   for (const item of financeData.indices) {
-    if (item.price !== null && item.price !== undefined) map[item.symbol] = { price: item.price, change: item.change, currency: item.currency };
+    if (item.price !== null && item.price !== undefined) map[item.symbol] = { price: item.price, change: item.change ?? undefined, currency: item.currency ?? undefined };
   }
   for (const item of financeData.commodities) {
-    if (item.price !== null && item.price !== undefined) map[item.symbol] = { price: item.price, change: item.change, currency: item.currency };
+    if (item.price !== null && item.price !== undefined) map[item.symbol] = { price: item.price, change: item.change ?? undefined, currency: item.currency ?? undefined };
   }
   for (const item of financeData.forex) {
-    if (item.price !== null && item.price !== undefined) map[item.symbol] = { price: item.price, change: item.change, currency: item.currency };
+    if (item.price !== null && item.price !== undefined) map[item.symbol] = { price: item.price, change: item.change ?? undefined, currency: item.currency ?? undefined };
   }
   for (const item of financeData.crypto) {
-    if (item.price !== null && item.price !== undefined) map[item.symbol] = { price: item.price, change: item.change24h };
+    if (item.price !== null && item.price !== undefined) map[item.symbol] = { price: item.price, change: item.change24h ?? undefined };
   }
   return map;
 }

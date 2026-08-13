@@ -17,7 +17,7 @@ function colorClassFromValue(value: number | null | undefined): string {
   return 'text-accent-red';
 }
 
-function toTreemapItem(item: MarketImpactItem, index: number): MetricTreemapItem {
+function toTreemapItem(item: MarketImpactItem, index: number): MetricTreemapItem<MarketImpactItem> {
   return {
     id: item.id ?? `item-${index}`,
     label: item.primaryText ?? item.label ?? '—',

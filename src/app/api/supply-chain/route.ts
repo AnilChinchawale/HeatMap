@@ -8,9 +8,17 @@ import {
   SupplyChainAlert,
 } from "@/lib/supply-chain";
 
+interface SupplyChainData {
+  ports: PortState[];
+  chokepoints: ChokepointState[];
+  alerts: SupplyChainAlert[];
+  routes: Array<typeof TRADE_ROUTES[0] & { status: string }>;
+  updatedAt: string;
+}
+
 // Simple in-memory cache
 let cache: {
-  data: any;
+  data: SupplyChainData;
   timestamp: number;
 } | null = null;
 
