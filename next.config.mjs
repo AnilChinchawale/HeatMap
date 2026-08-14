@@ -30,6 +30,10 @@ const nextConfig = {
         ],
       },
       {
+        source: '/api/:path*',
+        headers: [{ key: 'Cache-Control', value: 'private, no-store' }],
+      },
+      {
         source: '/api/signals',
         headers: [{ key: 'Cache-Control', value: 'public, s-maxage=60, stale-while-revalidate=300' }],
       },
@@ -40,10 +44,6 @@ const nextConfig = {
       {
         source: '/api/flights',
         headers: [{ key: 'Cache-Control', value: 'public, s-maxage=15, stale-while-revalidate=30' }],
-      },
-      {
-        source: '/api/:path*',
-        headers: [{ key: 'Cache-Control', value: 'public, s-maxage=60, stale-while-revalidate=300' }],
       },
       {
         source: '/textures/:path*',
