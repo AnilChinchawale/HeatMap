@@ -12,41 +12,6 @@ export interface InfrastructurePoint {
   risk?: 'low' | 'medium' | 'high' | 'critical';
 }
 
-// ☢ NUCLEAR SITES - Major facilities worldwide
-export const NUCLEAR_SITES: InfrastructurePoint[] = [
-  // USA
-  { id: 'nuke-1', name: 'Los Alamos National Lab', type: 'weapons', lat: 35.88, lon: -106.30, country: 'USA', status: 'active' },
-  { id: 'nuke-2', name: 'Pantex Plant', type: 'weapons', lat: 35.32, lon: -101.56, country: 'USA', status: 'active', description: 'Primary US nuclear weapons assembly' },
-  { id: 'nuke-3', name: 'Y-12 Oak Ridge', type: 'weapons', lat: 35.98, lon: -84.25, country: 'USA', status: 'active' },
-  // Russia
-  { id: 'nuke-4', name: 'Sarov (Arzamas-16)', type: 'weapons', lat: 54.93, lon: 43.32, country: 'Russia', status: 'active', description: 'Russian nuclear weapons design' },
-  { id: 'nuke-5', name: 'Seversk (Tomsk-7)', type: 'enrichment', lat: 56.60, lon: 84.88, country: 'Russia', status: 'active' },
-  { id: 'nuke-6', name: 'Zheleznogorsk', type: 'plutonium', lat: 56.25, lon: 93.53, country: 'Russia', status: 'active' },
-  // China
-  { id: 'nuke-7', name: 'Lop Nur', type: 'testing', lat: 41.55, lon: 88.70, country: 'China', status: 'inactive', description: 'Former nuclear test site' },
-  { id: 'nuke-8', name: 'Lanzhou', type: 'enrichment', lat: 36.05, lon: 103.83, country: 'China', status: 'active' },
-  // Iran
-  { id: 'nuke-9', name: 'Natanz', type: 'enrichment', lat: 33.72, lon: 51.72, country: 'Iran', status: 'active', risk: 'critical', description: 'Primary uranium enrichment' },
-  { id: 'nuke-10', name: 'Fordow', type: 'enrichment', lat: 34.88, lon: 51.00, country: 'Iran', status: 'active', risk: 'critical', description: 'Underground enrichment facility' },
-  { id: 'nuke-11', name: 'Isfahan', type: 'conversion', lat: 32.65, lon: 51.68, country: 'Iran', status: 'active', risk: 'high' },
-  { id: 'nuke-12', name: 'Arak', type: 'reactor', lat: 34.37, lon: 49.24, country: 'Iran', status: 'active', risk: 'high', description: 'Heavy water reactor' },
-  // North Korea
-  { id: 'nuke-13', name: 'Yongbyon', type: 'reactor', lat: 39.80, lon: 125.75, country: 'North Korea', status: 'active', risk: 'critical' },
-  { id: 'nuke-14', name: 'Punggye-ri', type: 'testing', lat: 41.28, lon: 129.08, country: 'North Korea', status: 'active', risk: 'critical', description: 'Nuclear test site' },
-  // Israel (undeclared)
-  { id: 'nuke-15', name: 'Dimona', type: 'reactor', lat: 31.00, lon: 35.15, country: 'Israel', status: 'active', description: 'Negev Nuclear Research Center' },
-  // Pakistan
-  { id: 'nuke-16', name: 'Kahuta', type: 'enrichment', lat: 33.60, lon: 73.40, country: 'Pakistan', status: 'active' },
-  { id: 'nuke-17', name: 'Khushab', type: 'reactor', lat: 32.02, lon: 72.22, country: 'Pakistan', status: 'active' },
-  // India
-  { id: 'nuke-18', name: 'Bhabha ARC', type: 'research', lat: 19.01, lon: 72.92, country: 'India', status: 'active' },
-  { id: 'nuke-19', name: 'Pokhran', type: 'testing', lat: 27.07, lon: 71.75, country: 'India', status: 'inactive' },
-  // UK
-  { id: 'nuke-20', name: 'Aldermaston', type: 'weapons', lat: 51.37, lon: -1.15, country: 'UK', status: 'active' },
-  // France
-  { id: 'nuke-21', name: 'Valduc', type: 'weapons', lat: 47.48, lon: 4.92, country: 'France', status: 'active' },
-];
-
 // 🚀 SPACEPORTS - Launch facilities
 export const SPACEPORTS: InfrastructurePoint[] = [
   // USA
@@ -66,8 +31,6 @@ export const SPACEPORTS: InfrastructurePoint[] = [
   { id: 'space-11', name: 'Guiana Space Centre', type: 'orbital', lat: 5.24, lon: -52.77, country: 'France/ESA', status: 'active' },
   { id: 'space-12', name: 'Satish Dhawan (SHAR)', type: 'orbital', lat: 13.72, lon: 80.23, country: 'India', status: 'active' },
   { id: 'space-13', name: 'Tanegashima', type: 'orbital', lat: 30.40, lon: 130.97, country: 'Japan', status: 'active' },
-  { id: 'space-14', name: 'Sohae', type: 'ICBM', lat: 39.66, lon: 124.70, country: 'North Korea', status: 'active', risk: 'critical' },
-  { id: 'space-15', name: 'Semnan', type: 'ICBM', lat: 35.23, lon: 53.92, country: 'Iran', status: 'active', risk: 'high' },
 ];
 
 // 🔌 UNDERSEA CABLES - Critical internet infrastructure
@@ -168,32 +131,10 @@ export const AI_DATA_CENTERS: InfrastructurePoint[] = [
   { id: 'ai-12', name: 'G42 (Abu Dhabi)', type: 'AI', lat: 24.47, lon: 54.37, country: 'UAE', status: 'active', description: 'Falcon AI training' },
 ];
 
-// 🎯 IRAN-SPECIFIC TARGETS (for Iran Attacks theater)
-export const IRAN_TARGETS: InfrastructurePoint[] = [
-  // Nuclear
-  { id: 'iran-1', name: 'Natanz Enrichment', type: 'nuclear', lat: 33.72, lon: 51.72, country: 'Iran', risk: 'critical' },
-  { id: 'iran-2', name: 'Fordow Underground', type: 'nuclear', lat: 34.88, lon: 51.00, country: 'Iran', risk: 'critical' },
-  { id: 'iran-3', name: 'Isfahan UCF', type: 'nuclear', lat: 32.65, lon: 51.68, country: 'Iran', risk: 'high' },
-  { id: 'iran-4', name: 'Arak Heavy Water', type: 'nuclear', lat: 34.37, lon: 49.24, country: 'Iran', risk: 'high' },
-  { id: 'iran-5', name: 'Bushehr NPP', type: 'power', lat: 28.83, lon: 50.88, country: 'Iran', risk: 'medium' },
-  // Military
-  { id: 'iran-6', name: 'Parchin Military', type: 'military', lat: 35.52, lon: 51.77, country: 'Iran', risk: 'high', description: 'Suspected weapons R&D' },
-  { id: 'iran-7', name: 'Isfahan AF Base', type: 'airbase', lat: 32.75, lon: 51.86, country: 'Iran', risk: 'medium' },
-  { id: 'iran-8', name: 'Bandar Abbas Naval', type: 'naval', lat: 27.18, lon: 56.28, country: 'Iran', risk: 'high' },
-  { id: 'iran-9', name: 'Kharg Island', type: 'oil', lat: 29.23, lon: 50.32, country: 'Iran', risk: 'critical', description: '90% of Iran oil exports' },
-  // Missile
-  { id: 'iran-10', name: 'Semnan Space Center', type: 'missile', lat: 35.23, lon: 53.92, country: 'Iran', risk: 'high' },
-  { id: 'iran-11', name: 'Shahrud Missile Base', type: 'missile', lat: 36.42, lon: 55.02, country: 'Iran', risk: 'high' },
-  // IRGC
-  { id: 'iran-12', name: 'IRGC HQ Tehran', type: 'military', lat: 35.70, lon: 51.42, country: 'Iran', risk: 'medium' },
-];
-
 // Layer definitions for map toggle
 export const INFRASTRUCTURE_LAYERS = [
-  { id: 'nuclear', name: 'Nuclear Sites', icon: '☢️', color: '#FF4444' },
   { id: 'spaceports', name: 'Spaceports', icon: '🚀', color: '#8844FF' },
   { id: 'cables', name: 'Undersea Cables', icon: '🔌', color: '#00AAFF' },
   { id: 'pipelines', name: 'Pipelines', icon: '🛢️', color: '#FF8800' },
   { id: 'ai-centers', name: 'AI Data Centers', icon: '🖥️', color: '#00FF88' },
-  { id: 'iran', name: 'Iran Targets', icon: '🎯', color: '#FF0000' },
 ];

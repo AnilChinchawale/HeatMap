@@ -12,10 +12,8 @@ import {
 } from "@/lib/feeds";
 import { getSeverityColor } from "@/lib/classify";
 import {
-  NUCLEAR_SITES,
   SPACEPORTS,
   AI_DATA_CENTERS,
-  IRAN_TARGETS,
   UNDERSEA_CABLES,
   PIPELINES,
 } from "@/lib/infrastructure";
@@ -90,7 +88,7 @@ const LAYERS = [
   { id: "military", name: "Military", icon: "🎖️", color: "#ffaa00" },
   { id: "chokepoints", name: "Choke", icon: "⚓", color: "#ffcc00" },
   { id: "earthquakes", name: "Quakes", icon: "🌋", color: "#ff4400" },
-  { id: "nuclear", name: "Nuclear", icon: "☢️", color: "#ff00ff" },
+
   { id: "spaceports", name: "Space", icon: "🚀", color: "#00ccff" },
   { id: "ai-centers", name: "AI", icon: "🖥️", color: "#00ff88" },
   { id: "cables", name: "Cables", icon: "🔌", color: "#00aaff" },
@@ -725,30 +723,7 @@ export default function WorldMap({
       });
     }
 
-    // Add nuclear site markers
-    if (activeLayers.includes("nuclear")) {
-      NUCLEAR_SITES.forEach((site) => {
-        const color =
-          site.risk === "critical"
-            ? "#ff0000"
-            : site.risk === "high"
-              ? "#ff4444"
-              : "#ffaa00";
-        const el = createMarkerElement("☢️", color, site.name, 0.9);
 
-        const marker = new maplibregl.Marker({ element: el })
-          .setLngLat([site.lon, site.lat])
-          .setPopup(
-            new maplibregl.Popup({ offset: 25, className: "dark-popup" })
-              .setHTML(`<div class="text-white"><strong>☢️ ${site.name}</strong><br/>
-              <span class="text-xs">${site.type} • ${site.country}</span>
-              ${site.description ? `<br/><span class="text-xs text-gray-400">${site.description}</span>` : ""}</div>`),
-          )
-          .addTo(map.current!);
-
-        markersRef.current.push(marker);
-      });
-    }
 
     // Add spaceport markers
     if (activeLayers.includes("spaceports")) {
@@ -774,38 +749,7 @@ export default function WorldMap({
       });
     }
 
-    // Add Iran targets
-    if (activeLayers.includes("iran")) {
-      IRAN_TARGETS.forEach((target) => {
-        const color =
-          target.risk === "critical"
-            ? "#ff0000"
-            : target.risk === "high"
-              ? "#ff4444"
-              : "#ff8800";
-        const icon =
-          target.type === "nuclear"
-            ? "☢️"
-            : target.type === "missile"
-              ? "🚀"
-              : target.type === "airbase"
-                ? "✈️"
-                : "🎯";
-        const el = createMarkerElement(icon, color, target.name, 1.0);
 
-        const marker = new maplibregl.Marker({ element: el })
-          .setLngLat([target.lon, target.lat])
-          .setPopup(
-            new maplibregl.Popup({ offset: 25, className: "dark-popup" })
-              .setHTML(`<div class="text-white"><strong>${icon} ${target.name}</strong><br/>
-              <span class="text-xs">${target.type} • ${target.risk?.toUpperCase() || "UNKNOWN"} risk</span>
-              ${target.description ? `<br/><span class="text-xs text-gray-400">${target.description}</span>` : ""}</div>`),
-          )
-          .addTo(map.current!);
-
-        markersRef.current.push(marker);
-      });
-    }
 
     // Add AI Data Centers
     if (activeLayers.includes("ai-centers")) {

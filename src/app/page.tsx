@@ -109,7 +109,7 @@ export default function Dashboard() {
   const [viewMode, setViewMode] = useState<ViewMode>('dashboard');
   const [activeLayers, setActiveLayers] = useState([
     'flights', 'routes', 'conflicts', 'military', 'chokepoints', 'earthquakes', 
-    'nuclear', 'spaceports', 'iran', 'cables', 'pipelines', 
+    'spaceports', 'cables', 'pipelines',
     'ai-centers', 'fires', 'gps-jamming', 'outages', 'cyber', 
     'weather', 'displacement', 'clusters', 'supplychain'
   ]);
